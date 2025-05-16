@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 243, 244, 246;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+.prose h1 {
+  @apply text-2xl font-bold mb-4;
+}
+
+.prose h2 {
+  @apply text-xl font-semibold mt-6 mb-3;
+}
+
+.prose p {
+  @apply mb-4;
+}
+
+.prose ul {
+  @apply list-disc pl-6 mb-4;
+}
+
+.prose li {
+  @apply mb-1;
+}
+
+h1,
+h2,
+h3,
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+/* estilos 3D para botões */
+.btn-3d {
+  @apply relative border border-gray-300 shadow-sm transition-all duration-150;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(0);
+}
+
+.btn-3d:hover {
+  box-shadow: 0 5px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.btn-3d:active {
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  transform: translateY(1px);
+}
+
+.btn-3d-primary {
+  @apply bg-blue-600 text-white border-blue-700;
+  box-shadow: 0 4px 0 0 #1e40af, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-3d-primary:hover {
+  @apply bg-blue-700;
+  box-shadow: 0 4px 0 0 #1e3a8a, 0 5px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
+}
+
+.btn-3d-primary:active {
+  box-shadow: 0 1px 0 0 #1e40af, 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+}
+
+.btn-3d-secondary {
+  @apply bg-gray-200 text-gray-800 border-gray-300;
+  box-shadow: 0 4px 0 0 #d1d5db, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-3d-secondary:hover {
+  @apply bg-gray-300;
+  box-shadow: 0 4px 0 0 #9ca3af, 0 5px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
+}
+
+.btn-3d-secondary:active {
+  box-shadow: 0 1px 0 0 #d1d5db, 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+}
+
+.btn-3d-disabled {
+  @apply opacity-70 cursor-not-allowed;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+}

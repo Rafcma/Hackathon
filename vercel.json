@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "env": {
+    "API_URL": "https://api.unifenas.br",
+    "API_EMAIL": "hackathon@unifenas.br",
+    "API_PASSWORD": "hackathon#2025"
+  }
+}
