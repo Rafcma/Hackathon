@@ -9,7 +9,7 @@ const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-cinzel", weight: [
 export const metadata: Metadata = {
   title: "Não se vá com IA",
   description: "Sistema de prevenção de evasão escolar com inteligência artificial",
-  generator: "v0.dev",
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({

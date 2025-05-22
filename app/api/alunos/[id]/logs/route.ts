@@ -14,6 +14,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json(logs)
   } catch (erro) {
     console.error(`Erro na API de logs do aluno ${params.id}:`, erro)
-    return NextResponse.json([])
+    return NextResponse.json({ erro: "Erro ao obter logs do aluno" }, { status: 500 })
   }
 }

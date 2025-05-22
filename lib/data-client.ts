@@ -1,21 +1,27 @@
+// #region Tipos
 import type { Aluno, EstatisticasRisco, FiltrosAlunos } from "./types"
+// #endregion
 
+// #region Estado do cliente
 let filtrosAtuais: FiltrosAlunos = {}
 let dadosCache: Aluno[] | null = null
 let estatisticasCache: EstatisticasRisco | null = null
+// #endregion
 
+// #region Funções de API do cliente
 export async function filtrarAlunos(curso: string, modulo: string): Promise<void> {
   try {
-    console.log(`Aplicando filtros: curso=${curso}, modulo=${modulo}`)
-
+    // Atualizar filtros locais
     filtrosAtuais = {
       curso: curso || undefined,
       modulo: modulo || undefined,
     }
 
+    // Limpar cache para forçar nova busca
     dadosCache = null
     estatisticasCache = null
 
+    // Chamar API para atualizar filtros no servidor
     const resposta = await fetch("/api/filtros", {
       method: "POST",
       headers: {
@@ -25,12 +31,8 @@ export async function filtrarAlunos(curso: string, modulo: string): Promise<void
     })
 
     if (!resposta.ok) {
-      const textoErro = await resposta.text()
-      console.error(`Erro ao aplicar filtros (${resposta.status}): ${textoErro}`)
       throw new Error(`Erro ao aplicar filtros: ${resposta.status}`)
     }
-
-    console.log("Filtros aplicados com sucesso")
   } catch (erro) {
     console.error("Erro ao filtrar alunos:", erro)
     throw erro
@@ -39,12 +41,12 @@ export async function filtrarAlunos(curso: string, modulo: string): Promise<void
 
 export async function getAlunos(): Promise<Aluno[]> {
   try {
+    // Usar cache se disponível
     if (dadosCache) {
       return dadosCache
     }
 
-    console.log("Buscando alunos da API...")
-
+    // Construir URL com parâmetros de filtro
     let url = "/api/alunos"
     const params = new URLSearchParams()
 
@@ -60,6 +62,7 @@ export async function getAlunos(): Promise<Aluno[]> {
       url += `?${params.toString()}`
     }
 
+    // Buscar dados da API
     const resposta = await fetch(url, {
       method: "GET",
       headers: {
@@ -69,13 +72,10 @@ export async function getAlunos(): Promise<Aluno[]> {
     })
 
     if (!resposta.ok) {
-      const textoErro = await resposta.text()
-      console.error(`Erro ao obter alunos (${resposta.status}): ${textoErro}`)
       throw new Error(`Erro ao obter alunos: ${resposta.status}`)
     }
 
     const dados = await resposta.json()
-    console.log(`${dados.length} alunos obtidos com sucesso`)
     dadosCache = dados
     return dados
   } catch (erro) {
@@ -86,50 +86,31 @@ export async function getAlunos(): Promise<Aluno[]> {
 
 export async function getEstatisticasRisco(): Promise<EstatisticasRisco> {
   try {
+    // Usar cache se disponível
     if (estatisticasCache) {
       return estatisticasCache
     }
 
-    console.log("Buscando estatísticas de risco...")
+    // Obter alunos filtrados primeiro
+    const alunos = await getAlunos()
 
-    let url = "/api/estatisticas"
-    const params = new URLSearchParams()
-
-    if (filtrosAtuais.curso) {
-      params.append("curso", filtrosAtuais.curso)
+    // Calcular estatísticas diretamente dos alunos filtrados
+    const estatisticas: EstatisticasRisco = {
+      baixo: 0,
+      medio: 0,
+      alto: 0,
     }
 
-    if (filtrosAtuais.modulo) {
-      params.append("modulo", filtrosAtuais.modulo)
-    }
-
-    if (params.toString()) {
-      url += `?${params.toString()}`
-    }
-
-    const resposta = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
+    // Contar alunos por nível de risco
+    alunos.forEach((aluno) => {
+      estatisticas[aluno.riscoEvasao]++
     })
 
-    if (!resposta.ok) {
-      const textoErro = await resposta.text()
-      console.error(`Erro ao obter estatísticas (${resposta.status}): ${textoErro}`)
-      throw new Error(`Erro ao obter estatísticas: ${resposta.status}`)
-    }
-
-    const dados = await resposta.json()
-    console.log("Estatísticas obtidas com sucesso:", dados)
-    estatisticasCache = dados
-    return dados
+    estatisticasCache = estatisticas
+    return estatisticas
   } catch (erro) {
     console.error("Erro ao obter estatísticas de risco:", erro)
-
-    const estatisticasFicticias = { baixo: 4, medio: 3, alto: 2 }
-    estatisticasCache = estatisticasFicticias
-    return estatisticasFicticias
+    return { baixo: 0, medio: 0, alto: 0 }
   }
 }
+// #endregion

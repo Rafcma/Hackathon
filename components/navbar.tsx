@@ -1,39 +1,38 @@
 import Link from "next/link"
-import Image from "next/image"
+import LogoRedesigned from "./logo-redesigned"
 
 export default function Navbar() {
   return (
-    <header className="bg-[#efece3] shadow-sm sticky top-0 z-10">
+    <header className="bg-white shadow-sm sticky top-0 z-10 border-b border-gray-100">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="w-10 h-10 mr-3">
-            <Image
-              src="/images/logo.png"
-              alt="Logo Não se vá com IA"
-              width={40}
-              height={40}
-              className="w-full h-full object-contain"
-            />
+        <Link href="/" className="group">
+          <div className="logo-hover-effect">
+            <LogoRedesigned variant="default" />
           </div>
-          <h1 className="text-xl font-bold text-gray-800 font-cinzel">Não se vá com IA</h1>
-        </div>
+        </Link>
         <nav>
-          <ul className="flex space-x-6">
+          <ul className="flex space-x-8">
             <li>
-              <Link href="/" className="text-base font-medium text-gray-800 hover:text-blue-600 transition-colors">
+              <Link
+                href="/"
+                className="text-base font-medium text-gray-700 hover:text-purple-800 transition-colors relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-purple-800 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left"
+              >
                 Home
               </Link>
             </li>
             <li>
               <Link
                 href="/pesquisa"
-                className="text-base font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                className="text-base font-medium text-gray-700 hover:text-purple-800 transition-colors relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-purple-800 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left"
               >
                 Pesquisa
               </Link>
             </li>
             <li>
-              <Link href="/sobre" className="text-base font-medium text-gray-800 hover:text-blue-600 transition-colors">
+              <Link
+                href="/sobre"
+                className="text-base font-medium text-gray-700 hover:text-purple-800 transition-colors relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-purple-800 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left"
+              >
                 Sobre
               </Link>
             </li>

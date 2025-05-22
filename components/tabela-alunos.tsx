@@ -25,7 +25,7 @@ export default function TabelaAlunos({ filtros, atualizacao }: TabelaAlunosProps
         setAlunos(dados)
       } catch (error) {
         console.error("Erro ao carregar alunos:", error)
-        setErro("Não foi possível carregar os dados dos alunos. Usando dados de exemplo.")
+        setErro("Não foi possível carregar os dados dos alunos.")
       } finally {
         setCarregando(false)
       }
@@ -39,17 +39,53 @@ export default function TabelaAlunos({ filtros, atualizacao }: TabelaAlunosProps
   }
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {erro && (
-        <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-4">
-          <p className="text-amber-700">{erro}</p>
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg
+                className="h-5 w-5 text-red-400"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{erro}</p>
+            </div>
+          </div>
         </div>
       )}
 
       {alunos.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">Nenhum aluno encontrado com os filtros selecionados.</div>
+        <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
+          <svg
+            className="mx-auto h-12 w-12 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+          <h3 className="mt-2 text-sm font-medium text-gray-900">Nenhum aluno encontrado</h3>
+          <p className="mt-1 text-sm text-gray-500">Tente ajustar os filtros para encontrar alunos.</p>
+        </div>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -97,29 +133,22 @@ export default function TabelaAlunos({ filtros, atualizacao }: TabelaAlunosProps
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-[#efece3] divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-200">
               {alunos.map((aluno) => (
-                <tr key={aluno.id} className="hover:bg-gray-50">
+                <tr key={aluno.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <Link href={`/alunos/${aluno.id}`} className="text-blue-600 hover:text-blue-900 transition-colors">
-                      <div className="text-sm font-medium">{aluno.nome}</div>
+                    <Link
+                      href={`/alunos/${aluno.id}`}
+                      className="text-purple-800 hover:text-purple-900 transition-colors font-medium"
+                    >
+                      {aluno.nome}
                     </Link>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{aluno.curso}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{aluno.modulo}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{aluno.acessos}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{aluno.participacaoForuns}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{aluno.atividadesConcluidas}</div>
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{aluno.curso}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{aluno.modulo}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{aluno.acessos}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{aluno.participacaoForuns}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{aluno.atividadesConcluidas}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <IndicadorRisco nivel={aluno.riscoEvasao} />
                   </td>
@@ -135,8 +164,8 @@ export default function TabelaAlunos({ filtros, atualizacao }: TabelaAlunosProps
 
 function Loading() {
   return (
-    <div className="flex justify-center items-center p-8">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+    <div className="flex justify-center items-center p-12">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-800"></div>
       <span className="ml-3 text-gray-600">Carregando dados...</span>
     </div>
   )

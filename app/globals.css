@@ -3,13 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 243, 244, 246;
+  --foreground-rgb: 51, 51, 51;
+  --background-rgb: 248, 249, 250;
+  --primary-color: 91, 33, 182; /* Roxo escuro (purple-800) */
+  --secondary-color: 243, 232, 255; /* Roxo claro (purple-100) */
+  --accent-color: 124, 58, 237; /* Roxo médio (purple-600) */
+  --success-color: 16, 185, 129;
+  --warning-color: 245, 158, 11;
+  --danger-color: 239, 68, 68;
+  --border-radius: 0.5rem;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 .prose h1 {
@@ -39,53 +48,137 @@ h3,
   font-family: var(--font-cinzel);
 }
 
-/* estilos 3D para botões */
-.btn-3d {
-  @apply relative border border-gray-300 shadow-sm transition-all duration-150;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transform: translateY(0);
+/* Componentes personalizados */
+.card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden;
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-3d:hover {
-  box-shadow: 0 5px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
-  transform: translateY(-1px);
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.btn-3d:active {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
-  transform: translateY(1px);
+.card-header {
+  @apply p-5 border-b border-gray-100;
 }
 
-.btn-3d-primary {
-  @apply bg-blue-600 text-white border-blue-700;
-  box-shadow: 0 4px 0 0 #1e40af, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+.card-body {
+  @apply p-5;
 }
 
-.btn-3d-primary:hover {
-  @apply bg-blue-700;
-  box-shadow: 0 4px 0 0 #1e3a8a, 0 5px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
+.card-footer {
+  @apply p-5 border-t border-gray-100;
 }
 
-.btn-3d-primary:active {
-  box-shadow: 0 1px 0 0 #1e40af, 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+/* Botões estilizados */
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium transition-colors duration-200 ease-in-out;
+  border-radius: calc(var(--border-radius) - 0.125rem);
 }
 
-.btn-3d-secondary {
-  @apply bg-gray-200 text-gray-800 border-gray-300;
-  box-shadow: 0 4px 0 0 #d1d5db, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+.btn-primary {
+  @apply text-white bg-purple-800 hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700;
 }
 
-.btn-3d-secondary:hover {
-  @apply bg-gray-300;
-  box-shadow: 0 4px 0 0 #9ca3af, 0 5px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
+.btn-secondary {
+  @apply text-purple-800 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500;
 }
 
-.btn-3d-secondary:active {
-  box-shadow: 0 1px 0 0 #d1d5db, 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+.btn-outline {
+  @apply text-purple-800 bg-transparent border border-purple-800 hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500;
 }
 
-.btn-3d-disabled {
-  @apply opacity-70 cursor-not-allowed;
-  transform: translateY(0) !important;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+.btn-danger {
+  @apply text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500;
+}
+
+.btn-sm {
+  @apply px-3 py-1.5 text-xs;
+}
+
+.btn-lg {
+  @apply px-6 py-3 text-base;
+}
+
+.btn-disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Inputs estilizados */
+.input {
+  @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm;
+  border-radius: calc(var(--border-radius) - 0.125rem);
+}
+
+.select {
+  @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm appearance-none;
+  border-radius: calc(var(--border-radius) - 0.125rem);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Utilitários */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, rgb(var(--primary-color)), rgb(var(--accent-color)));
+}
+
+.bg-gradient {
+  background-image: linear-gradient(to right, rgba(var(--primary-color), 0.8), rgba(var(--accent-color), 0.8));
+}
+
+.bg-pattern {
+  background-color: #f8f9fa;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e5e7eb' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Custom clip paths */
+.clip-triangle {
+  clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+}
+
+/* Logo hover effects */
+.logo-hover-effect {
+  transition: all 0.3s ease;
+}
+
+.logo-hover-effect:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
 }

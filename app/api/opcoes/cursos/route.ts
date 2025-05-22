@@ -1,19 +1,12 @@
 import { NextResponse } from "next/server"
-import { obterCursos } from "@/lib/data"
+import { obterCursosDisponiveis } from "@/lib/data"
 
 export async function GET() {
   try {
-    const cursos = await obterCursos()
+    const cursos = await obterCursosDisponiveis()
     return NextResponse.json(cursos)
   } catch (erro) {
     console.error("Erro na API de cursos:", erro)
-
-    return NextResponse.json([
-      "Engenharia de Software",
-      "Ciência da Computação",
-      "Sistemas de Informação",
-      "Análise de Dados",
-      "Design Digital",
-    ])
+    return NextResponse.json({ erro: "Erro ao obter lista de cursos" }, { status: 500 })
   }
 }

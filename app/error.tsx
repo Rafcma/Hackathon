@@ -10,6 +10,7 @@ export default function Error({
   reset: () => void
 }) {
   useEffect(() => {
+    // Registrar o erro no sistema de monitoramento
     console.error("Erro na aplicação:", error)
   }, [error])
 
@@ -35,13 +36,10 @@ export default function Error({
         <h1 className="text-2xl font-semibold text-gray-800 mb-4 font-cinzel">Algo deu errado!</h1>
         <p className="text-gray-600 mb-6">Ocorreu um erro inesperado. Nossa equipe técnica foi notificada.</p>
         <div className="space-y-4">
-          <button onClick={() => reset()} className="w-full btn-3d btn-3d-primary py-3 px-4 rounded-md font-medium">
+          <button onClick={() => reset()} className="w-full btn btn-primary py-3 px-4">
             Tentar Novamente
           </button>
-          <button
-            onClick={() => (window.location.href = "/")}
-            className="w-full btn-3d btn-3d-secondary py-3 px-4 rounded-md font-medium"
-          >
+          <button onClick={() => (window.location.href = "/")} className="w-full btn btn-outline py-3 px-4">
             Voltar para a Página Inicial
           </button>
         </div>

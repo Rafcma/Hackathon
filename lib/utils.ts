@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+// #region Utilitários
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -19,3 +20,4 @@ export function formatarData(data: Date): string {
     return "Data inválida"
   }
 }
+// #endregion
